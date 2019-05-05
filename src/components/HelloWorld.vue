@@ -1,32 +1,19 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <button class="toggle-print" v-on:click="tooglePrint">Toggle</button>
+    <section class="tabs-component-panel" v-bind:class="{ print: isPrint }">
+      <p>Tab 1</p>
+    </section>
+    <section class="tabs-component-panel" v-bind:class="{ print: isPrint }">
+      <p>Tab 2</p>
+    </section>
+    <section class="tabs-component-panel" v-bind:class="{ print: isPrint }">
+      <p>Tab 3</p>
+    </section>
+    <section class="tabs-component-panel" v-bind:class="{ print: isPrint }">
+      <p>Tab 4</p>
+    </section>
   </div>
 </template>
 
@@ -35,6 +22,22 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data: function() {
+    return {
+      isPrint: false
+    }
+  },
+  methods: {
+    tooglePrint: function () {
+      this.isPrint = !this.isPrint;
+      if (this.isPrint) {
+        this.$nextTick(() => {
+          window.print();
+        });
+      }
+      //alert('toggle');
+    }
   }
 }
 </script>
@@ -54,5 +57,26 @@ li {
 }
 a {
   color: #42b983;
+}
+
+section.tabs-component-panel {
+  display: none;
+  padding: 50px 20px;
+  background: #eee;
+}
+section.tabs-component-panel:first-of-type {
+  display: block;
+  padding: 50px 20px;
+  background: #eee;
+}
+section.tabs-component-panel.print {
+  display: block;
+}
+.toggle-print {
+  background: #42b983;
+  color: #FFF;
+  border: 0;
+  border-radius: 3px;
+  padding: 1em;
 }
 </style>
